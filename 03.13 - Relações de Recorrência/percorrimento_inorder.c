@@ -4,9 +4,9 @@ struct Data_Tree {
   int Value;
   Data_Tree *Left;
   Data_Tree *Right;
-  };
+};
 
-...
+
 void show_inorder(Data_Tree *node){
    if (node) {
          show_inorder(p->Left);
