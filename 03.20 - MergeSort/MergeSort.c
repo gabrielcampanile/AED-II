@@ -1,44 +1,80 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
 
-void Merge(int *A, int p, int q, int r){
-    int n1 = q - p + 1;
-    int n2 = r - q;
+void merge(int arr[], int left, int middle, int right) {
+    int i, j, k;
+    int n1 = middle - left + 1;
+    int n2 = right - middle;
 
-    int *L = malloc((n1+1)*sizeof(int));
-    int *R = malloc((n2+1)*sizeof(int));
+    // Arrays temporários
+    int L[n1], R[n2];
 
-    for (int i = 0; i < n1 + 1; i++)
-        L[i] = A[p + i - 1];
-    for (int j = 0; j < n2 + 1; j++)
-        R[j] = A[q + j];
+    // Copiando dados para os arrays temporários L[] e R[]
+    for (i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (j = 0; j < n2; j++)
+        R[j] = arr[middle + 1 + j];
 
-    L[n1 + 1] = INT_MAX;
-    R[n2 + 1] = INT_MAX;
-
-    int i = 0;
-    int j = 0;
-
-    for (int k = p; k < r + 1; k++){
-        if (L[i] <= R[i]){
-            A[k] = L[i];
-            i += 1;
+    // Mesclando os arrays temporários de volta ao arr[]
+    i = 0;
+    j = 0;
+    k = left;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
         }
-        else{
-            A[k] = R[i];
-            j += 1;
-        }
+        k++;
+    }
+
+    // Copiando os elementos restantes de L[], se houver
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    // Copiando os elementos restantes de R[], se houver
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
     }
 }
 
-void Merge_Sort(int *A, int p, int r){
-    int q;
-    
-    if (p < r){
-        q = (p + r)/2;
-        Merge_Sort(A, p, q);
-        Merge_Sort(A, q+1, r);
-        Merge(A, p, q, r);
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+        int middle = left + (right - left) / 2;
+
+        // Ordena a primeira e a segunda metade
+        mergeSort(arr, left, middle);
+        mergeSort(arr, middle + 1, right);
+
+        // Mescla as duas metades ordenadas
+        merge(arr, left, middle, right);
     }
+}
+
+void printArray(int arr[], int size) {
+    int i;
+    for (i = 0; i < size; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {6, 4, 0, 1, 3, 5, 2};
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Array original:\n");
+    printArray(arr, arr_size);
+
+    mergeSort(arr, 0, arr_size - 1);
+
+    printf("\nArray ordenado:\n");
+    printArray(arr, arr_size);
+    
+    return 0;
 }
