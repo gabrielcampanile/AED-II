@@ -6,7 +6,6 @@ struct Data_Tree {
   Data_Tree *Right;
 };
 
-
 void show_inorder(Data_Tree *node){
    if (node) {
          show_inorder(p->Left);
