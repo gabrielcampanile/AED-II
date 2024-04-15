@@ -23,15 +23,15 @@ void swap(char **A, int i, int j)
 
 void MaxHeapify(char **A, int n, int i)
 {
-    int e = 2 * i;
-    int d = 2 * i + 1;
+    int e = 2 * i + 1;
+    int d = 2 * i + 2;
     int maior = i;
 
-    if (e <= n && strcmp(A[e], A[i]) > 0)
+    if (e < n && strcmp(A[maior], A[e]) < 0)
     {
         maior = e;
     }
-    if (d <= n && strcmp(A[d], A[maior]) > 0)
+    if (d < n && strcmp(A[maior], A[d]) < 0)
     {
         maior = d;
     }
@@ -44,7 +44,7 @@ void MaxHeapify(char **A, int n, int i)
 
 void buildHeap(char **A, int n)
 {
-    for (int i = n / 2; i > 0; i--)
+    for (int i = n / 2 -1; i >= 0; i--)
         MaxHeapify(A, n, i);
 }
 
@@ -52,14 +52,19 @@ char **HeapSort(char **A, int n)
 {
     buildHeap(A, n);
 
-    char **V = (char **)malloc((n + 1) * sizeof(char *));
+    for (int i = 0; i < n; i++)
+    {
+        printf("%s ", A[i]);
+    }
+
+    char **V = (char **)malloc(n * sizeof(char *));
 
     while (n > 0)
     {
-        V[n] = A[1];
-        A[1] = A[n];
+        V[n-1] = A[0];
+        A[0] = A[n-1];
         n--;
-        MaxHeapify(A, n, 1);
+        MaxHeapify(A, n, 0);
     }
 
     return V;
@@ -71,9 +76,9 @@ int main()
     // printf("Digite a quantidade total de palavras: ");
     scanf("%d", &N);
 
-    char **V = (char **)malloc((N + 1) * sizeof(char *));
+    char **V = (char **)malloc(N * sizeof(char *));
     // printf("Digite as palavras separadas por espaço: ");
-    for (int i = 1; i <= N; i++)
+    for (int i = 0; i < N; i++)
     {
         V[i] = (char *)malloc(20 * sizeof(char));
         scanf("%s", V[i]);
@@ -92,26 +97,24 @@ int main()
         scanf("%d", &indices[i]);
     }
 
-    char **A = (char **)malloc((M + 1) * sizeof(char *));
+    char **A = (char **)malloc(M * sizeof(char *));
     printf("build_heap: ");
     for (int i = 0; i < M; i++)
     {
-        A[i + 1] = V[indices[i] + 1]; // +1 pois o vetor de palavras começa em 1
-        printf("%s ", A[i + 1]);
+        A[i] = V[indices[i]]; // +1 pois o vetor de palavras começa em 1
     }
-    printf("\n");
 
     A = HeapSort(A, M);
 
-    printf("palavras: ");
-    for (int i = 1; i <= M; i++)
+    printf("\npalavras: ");
+    for (int i = 0; i < M; i++)
     {
         printf("%s ", A[i]);
     }
     printf("\n");
 
     // Liberar memória alocada
-    for (int i = 1; i <= N; i++)
+    for (int i = 0; i < N; i++)
     {
         free(V[i]);
     }
