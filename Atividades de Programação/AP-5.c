@@ -53,9 +53,7 @@ char **HeapSort(char **A, int n)
     buildHeap(A, n);
 
     for (int i = 0; i < n; i++)
-    {
         printf("%s ", A[i]);
-    }
 
     char **V = (char **)malloc(n * sizeof(char *));
 
