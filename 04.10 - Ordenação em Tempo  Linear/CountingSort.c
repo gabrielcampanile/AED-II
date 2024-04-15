@@ -35,6 +35,7 @@ void countingSort(int *A, int *B, int k, int n) { //input: A, k(maior elemento d
         C[A[j]] = C[A[j]] - 1;
     }
 }
+
 int main() {
     int n, k;
     printf("Size: ");
