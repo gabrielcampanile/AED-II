@@ -126,14 +126,17 @@ void emOrdem(Node* root) {
 
 int main() {
     Node* root = NULL;
+    int N, chave;
+
+    printf("Digite o número de chaves a serem inseridas: ");
+    scanf("%d", &N);
 
     // Inserindo chaves na árvore AVL
-    root = inserir(root, 10);
-    root = inserir(root, 20);
-    root = inserir(root, 30);
-    root = inserir(root, 40);
-    root = inserir(root, 50);
-    root = inserir(root, 25);
+    for (int i = 0; i < N; i++) {
+        printf("Digite a chave %d: ", i + 1);
+        scanf("%d", &chave);
+        root = inserir(root, chave);
+    }
 
     printf("Árvore AVL em ordem:\n");
     emOrdem(root);
