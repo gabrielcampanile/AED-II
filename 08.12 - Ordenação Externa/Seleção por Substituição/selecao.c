@@ -31,7 +31,7 @@ void ajusta_heap(int arr[], int n, int i) {
 // Função principal de ordenação por seleção por substituição
 void selecao_por_substituicao(FILE *entrada, FILE *saida) {
     int memoria[TAMANHO_MEMORIA];
-    int i, j, num_elementos;
+    int i, num_elementos;
     
     // Carrega a memória inicial com os elementos do arquivo de entrada
     for (i = 0; i < TAMANHO_MEMORIA; i++) {
